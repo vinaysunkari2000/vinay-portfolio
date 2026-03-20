@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vinay Sunkari — Supply Chain & Analytics</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+:root{
+  --bg:#060608;--surface:#0e0e14;--card:#13131c;--border:#222230;
+  --accent:#f0ff44;--accent2:#ff4d6d;--accent3:#4dffef;
+  --text:#d0d0e0;--muted:#606080;--white:#ffffff;
+  --heading:'Bebas Neue',Impact,Arial Black,sans-serif;
+  --body:'Space Grotesk',Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--body);
+  font-weight:400;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+/* CURSOR */
+#cur,#ring{position:fixed;pointer-events:none;z-index:99999;border-radius:50%;transform:translate(-50%,-50%);transition:all .15s ease;}
+#cur{width:10px;height:10px;background:var(--accent);}
+#ring{width:34px;height:34px;border:1.5px solid rgba(240,255,68,.5);z-index:99998;transition:all .2s ease;}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 4rem;
+  background:rgba(6,6,8,.96);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo{font-family:var(--heading);font-size:1.8rem;letter-spacing:.06em;color:var(--white);}
+.logo em{color:var(--accent);font-style:normal;}
+.nav-links{display:flex;align-items:center;gap:2rem;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--accent);}
+.nav-dl{
+  background:var(--accent);color:#060608;
+  font-family:var(--body);font-size:.78rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:.5rem 1.3rem;border-radius:4px;border:none;cursor:pointer;
+  transition:box-shadow .2s,transform .2s;
+}
+.nav-dl:hover{box-shadow:0 0 22px rgba(240,255,68,.55);transform:translateY(-2px);}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:9rem 4rem 7rem;position:relative;overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(240,255,68,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(240,255,68,.025) 1px,transparent 1px);
+  background-size:65px 65px;pointer-events:none;
+}
+.hero-glow{position:absolute;top:-20%;left:-10%;width:70vw;height:70vw;background:radial-gradient(circle,rgba(124,106,247,.07) 0%,transparent 65%);pointer-events:none;}
+.hero-tag{display:inline-flex;align-items:center;gap:.6rem;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:1.8rem;}
+.hero-tag::before{content:'';width:28px;height:1px;background:var(--accent);}
+.hero h1{
+  font-family:var(--heading);
+  font-size:clamp(5.5rem,12vw,11rem);
+  line-height:.93;letter-spacing:.02em;
+  color:var(--white);margin-bottom:2.5rem;
+  position:relative;z-index:1;
+}
+.hero h1 .outline{-webkit-text-stroke:2px var(--white);color:transparent;}
+.hero h1 .accent{color:var(--accent);}
+.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:3rem;flex-wrap:wrap;position:relative;z-index:1;}
+.hero-desc{max-width:500px;font-size:1rem;color:var(--text);opacity:.78;line-height:1.8;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;}
+
+/* BUTTONS */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--accent);color:#060608;
+  font-family:var(--body);font-size:.88rem;font-weight:700;
+  letter-spacing:.04em;text-transform:uppercase;
+  padding:.9rem 2rem;border-radius:4px;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:box-shadow .25s,transform .2s;
+}
+.btn-primary:hover{box-shadow:0 0 30px rgba(240,255,68,.5);transform:translateY(-3px);}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:transparent;color:var(--white);
+  font-family:var(--body);font-size:.88rem;font-weight:600;
+  letter-spacing:.04em;text-transform:uppercase;
+  padding:.9rem 2rem;border-radius:4px;
+  border:1px solid var(--border);
+  text-decoration:none;cursor:pointer;
+  transition:border-color .2s,color .2s,transform .2s;
+}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px);}
+.btn-dl-outline{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:transparent;border:2px solid var(--accent);color:var(--accent);
+  font-family:var(--body);font-size:.88rem;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;
+  padding:.9rem 2rem;border-radius:4px;cursor:pointer;
+  transition:background .2s,color .2s,box-shadow .2s,transform .2s;
+}
+.btn-dl-outline:hover{background:var(--accent);color:#060608;box-shadow:0 0 28px rgba(240,255,68,.4);transform:translateY(-3px);}
+
+/* MARQUEE */
+.marquee-bar{background:var(--accent);padding:.55rem 0;overflow:hidden;border-top:1px solid rgba(0,0,0,.1);}
+.marquee-inner{display:flex;gap:2.5rem;animation:scroll 20s linear infinite;width:max-content;}
+.marquee-inner span{font-family:var(--heading);font-size:.95rem;letter-spacing:.12em;color:#060608;white-space:nowrap;}
+.marquee-inner .dot{color:rgba(6,6,8,.3);}
+@keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* STATS */
+.stats{background:var(--surface);border-bottom:1px solid var(--border);}
+.stats-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
+.stat{padding:3rem 2rem;border-right:1px solid var(--border);text-align:center;}
+.stat:last-child{border-right:none;}
+.stat-n{font-family:var(--heading);font-size:4.5rem;line-height:1;color:var(--white);letter-spacing:.02em;}
+.stat-n em{color:var(--accent);font-style:normal;}
+.stat-l{font-size:.72rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:.4rem;}
+
+/* SECTION */
+.wrap{max-width:1200px;margin:0 auto;padding:7rem 4rem;}
+.eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent2);margin-bottom:.7rem;display:flex;align-items:center;gap:.6rem;}
+.eyebrow::before{content:'';width:22px;height:1px;background:var(--accent2);}
+.sec-h{font-family:var(--heading);font-size:clamp(3rem,6vw,5.5rem);line-height:.95;letter-spacing:.02em;color:var(--white);margin-bottom:3.5rem;}
+.sec-h span{color:var(--accent);}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 400px;gap:5rem;align-items:start;}
+.about-text p{font-size:1rem;opacity:.82;margin-bottom:1.3rem;line-height:1.8;}
+.big-quote{font-family:var(--heading);font-size:2.5rem;color:var(--accent);line-height:1.1;margin:2rem 0;letter-spacing:.02em;}
+.info-table{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.info-row{background:var(--card);display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.4rem;transition:background .2s;}
+.info-row:hover{background:#1c1c28;}
+.info-label{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.info-val{font-size:.9rem;font-weight:500;color:var(--white);text-align:right;}
+.dl-wrap{background:var(--card);padding:1.4rem;}
+
+/* SKILLS */
+.skills-bg{background:var(--surface);}
+.skill-rows{display:flex;flex-direction:column;gap:2px;background:var(--border);}
+.skill-row{background:var(--card);display:grid;grid-template-columns:210px 1fr;align-items:start;padding:1.8rem 2.5rem;gap:2.5rem;transition:background .2s;}
+.skill-row:hover{background:#1c1c28;}
+.skill-cat{font-family:var(--heading);font-size:1.35rem;letter-spacing:.04em;color:var(--white);}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+.tag{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:3px;padding:.26rem .7rem;font-size:.76rem;color:var(--text);transition:border-color .2s,color .2s;}
+.tag:hover{border-color:var(--accent);color:var(--accent);}
+.tag.h{border-color:rgba(240,255,68,.3);color:var(--accent);}
+
+/* EXPERIENCE */
+.exp-entry{display:grid;grid-template-columns:190px 1fr;gap:4rem;padding:4rem 0;border-bottom:1px solid var(--border);}
+.exp-entry:first-child{border-top:1px solid var(--border);}
+.exp-date{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;}
+.exp-loc{font-size:.78rem;color:var(--muted);margin-top:.2rem;}
+.exp-co{font-family:var(--heading);font-size:2.2rem;letter-spacing:.03em;color:var(--white);line-height:1;margin-bottom:.25rem;}
+.exp-client{font-size:.82rem;color:var(--muted);margin-bottom:.4rem;}
+.exp-badge{display:inline-block;background:rgba(240,255,68,.1);border:1px solid rgba(240,255,68,.25);color:var(--accent);font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.26rem .9rem;border-radius:3px;margin-bottom:1.4rem;}
+.exp-ul{list-style:none;display:flex;flex-direction:column;gap:.85rem;}
+.exp-ul li{font-size:.92rem;opacity:.82;padding-left:1.4rem;position:relative;line-height:1.7;}
+.exp-ul li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:.78rem;top:.12rem;}
+
+/* PROJECTS */
+.proj-bg{background:var(--surface);}
+.proj-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:2.8rem;position:relative;overflow:hidden;transition:border-color .25s,transform .25s;}
+.proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent3));}
+.proj-card:hover{border-color:rgba(240,255,68,.35);transform:translateY(-5px);}
+.proj-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;}
+.proj-title{font-family:var(--heading);font-size:2rem;letter-spacing:.03em;color:var(--white);line-height:1.05;}
+.proj-date{font-size:.72rem;font-weight:600;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;padding-top:.3rem;}
+.proj-ul{list-style:none;display:flex;flex-direction:column;gap:.75rem;}
+.proj-ul li{font-size:.91rem;opacity:.8;padding-left:1.3rem;position:relative;line-height:1.65;}
+.proj-ul li::before{content:'◆';position:absolute;left:0;color:var(--accent3);font-size:.5rem;top:.44rem;}
+.proj-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.4rem;}
+.chip{background:rgba(77,255,239,.07);border:1px solid rgba(77,255,239,.2);color:var(--accent3);font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.22rem .65rem;border-radius:3px;}
+
+/* CERTS */
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.2rem;}
+.cert{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.8rem;position:relative;overflow:hidden;transition:border-color .2s,transform .2s;}
+.cert::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--accent2);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.cert:hover::after{transform:scaleX(1);}
+.cert:hover{transform:translateY(-3px);}
+.cert-n{font-family:var(--heading);font-size:3rem;line-height:1;color:rgba(255,255,255,.04);position:absolute;top:.6rem;right:.9rem;}
+.cert-icon{font-size:1.8rem;margin-bottom:.8rem;}
+.cert-name{font-size:.94rem;font-weight:600;color:var(--white);line-height:1.4;}
+
+/* CONTACT */
+.contact-bg{background:var(--surface);}
+.contact-h{font-family:var(--heading);font-size:clamp(3rem,7vw,6.5rem);line-height:.95;color:var(--white);margin-bottom:3rem;}
+.contact-h span{color:var(--accent);}
+.contact-cells{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-bottom:2.5rem;}
+.cell{background:var(--card);padding:1.8rem 2.2rem;transition:background .2s;}
+.cell:hover{background:#1c1c28;}
+.cell-l{font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem;}
+.cell-v{font-size:1rem;font-weight:500;color:var(--white);}
+.cell-v a{color:var(--white);text-decoration:none;}
+.cell-v a:hover{color:var(--accent);}
+.ctas{display:flex;gap:1rem;flex-wrap:wrap;}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.f-logo{font-family:var(--heading);font-size:1.3rem;letter-spacing:.06em;color:var(--white);}
+.f-logo em{color:var(--accent);font-style:normal;}
+.f-copy{font-size:.78rem;color:var(--muted);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.on{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links .hide{display:none;}
+  .hero{padding:8rem 1.5rem 5rem;}
+  .hero h1{font-size:clamp(4rem,14vw,7rem);}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .stat{border-right:none;border-bottom:1px solid var(--border);}
+  .wrap{padding:5rem 1.5rem;}
+  .about-grid{grid-template-columns:1fr;}
+  .skill-row{grid-template-columns:1fr;gap:1rem;}
+  .exp-entry{grid-template-columns:1fr;gap:1rem;}
+  .contact-cells{grid-template-columns:1fr;}
+  footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR DOTS -->
+<div id="cur"></div>
+<div id="ring"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">VINAY<em>.</em></div>
+  <div class="nav-links">
+    <a href="#about" class="hide">About</a>
+    <a href="#skills" class="hide">Skills</a>
+    <a href="#experience" class="hide">Experience</a>
+    <a href="#projects" class="hide">Projects</a>
+    <a href="#certifications" class="hide">Certs</a>
+    <a href="#contact" class="hide">Contact</a>
+    <button class="nav-dl" onclick="dlResume()">&#8595; Resume</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-tag">Supply Chain &amp; Analytics Professional</div>
+  <h1>
+    VINAY<br/>
+    <span class="outline">SUN</span><span class="accent">KARI</span>
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">
+      2+ years transforming enterprise supply chain operations — building Power BI dashboards, SQL pipelines, and SAP WM/EWM workflows that move the needle on OTIF, inventory accuracy, and freight spend.
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">&#8599; Hire Me</a>
+      <a href="#experience" class="btn-secondary">View Work</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    <span>POWER BI</span><span class="dot">&#10022;</span>
+    <span>SQL</span><span class="dot">&#10022;</span>
+    <span>SAP WM/EWM</span><span class="dot">&#10022;</span>
+    <span>EXCEL VBA</span><span class="dot">&#10022;</span>
+    <span>TABLEAU</span><span class="dot">&#10022;</span>
+    <span>PYTHON</span><span class="dot">&#10022;</span>
+    <span>SUPPLY CHAIN ANALYTICS</span><span class="dot">&#10022;</span>
+    <span>KPI DASHBOARDS</span><span class="dot">&#10022;</span>
+    <span>OTIF</span><span class="dot">&#10022;</span>
+    <span>INVENTORY MANAGEMENT</span><span class="dot">&#10022;</span>
+    <span>LEAN SIX SIGMA</span><span class="dot">&#10022;</span>
+    <span>DEMAND FORECASTING</span><span class="dot">&#10022;</span>
+    <!-- duplicate for loop -->
+    <span>POWER BI</span><span class="dot">&#10022;</span>
+    <span>SQL</span><span class="dot">&#10022;</span>
+    <span>SAP WM/EWM</span><span class="dot">&#10022;</span>
+    <span>EXCEL VBA</span><span class="dot">&#10022;</span>
+    <span>TABLEAU</span><span class="dot">&#10022;</span>
+    <span>PYTHON</span><span class="dot">&#10022;</span>
+    <span>SUPPLY CHAIN ANALYTICS</span><span class="dot">&#10022;</span>
+    <span>KPI DASHBOARDS</span><span class="dot">&#10022;</span>
+    <span>OTIF</span><span class="dot">&#10022;</span>
+    <span>INVENTORY MANAGEMENT</span><span class="dot">&#10022;</span>
+    <span>LEAN SIX SIGMA</span><span class="dot">&#10022;</span>
+    <span>DEMAND FORECASTING</span><span class="dot">&#10022;</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-grid">
+    <div class="stat reveal"><div class="stat-n">2<em>+</em></div><div class="stat-l">Years Experience</div></div>
+    <div class="stat reveal"><div class="stat-n">12<em>+</em></div><div class="stat-l">Distribution Centers</div></div>
+    <div class="stat reveal"><div class="stat-n">15<em>%</em></div><div class="stat-l">Stockout Risk Reduced</div></div>
+    <div class="stat reveal"><div class="stat-n">3<em>.8</em></div><div class="stat-l">MS GPA at USF</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Who I Am</div>
+      <div class="sec-h">ABOUT <span>ME</span></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm a Supply Chain &amp; Analytics professional with 2+ years of experience supporting global distribution and manufacturing operations. My foundation was built at Wipro Limited supporting Philips — monitoring inventory across Distribution Centers, building KPI dashboards, and driving continuous improvement projects that delivered measurable results.</p>
+        <div class="big-quote">DATA THAT<br/>DRIVES ACTION.</div>
+        <p>Currently pursuing my MS in Artificial Intelligence &amp; Business Analytics at the University of South Florida (GPA 3.80), deepening my skills in machine learning, forecasting, and advanced analytics applied to real supply chain problems.</p>
+        <p>I bridge operational supply chain and data analytics — translating ERP/WMS data into Power BI dashboards, SQL pipelines, and Python forecasting models that reduce cost, improve OTIF, and accelerate decisions.</p>
+      </div>
+      <div class="reveal">
+        <div class="info-table">
+          <div class="info-row"><span class="info-label">Location</span><span class="info-val">Tampa, FL</span></div>
+          <div class="info-row"><span class="info-label">Degree</span><span class="info-val">MS AI &amp; Business Analytics</span></div>
+          <div class="info-row"><span class="info-label">University</span><span class="info-val">Univ. of South Florida</span></div>
+          <div class="info-row"><span class="info-label">GPA</span><span class="info-val" style="color:var(--accent)">3.80 / 4.0</span></div>
+          <div class="info-row"><span class="info-label">Experience</span><span class="info-val">2+ Years</span></div>
+          <div class="info-row"><span class="info-label">Email</span><span class="info-val" style="font-size:.8rem">vinaysunkari1904@gmail.com</span></div>
+          <div class="info-row"><span class="info-label">Phone</span><span class="info-val">+1 (813) 816-0019</span></div>
+          <div class="dl-wrap">
+            <button onclick="dlResume()" class="btn-dl-outline" style="width:100%;justify-content:center;">
+              &#8595; Download Resume
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="skills-bg">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Capabilities</div>
+      <div class="sec-h">TECHNICAL <span>SKILLS</span></div>
+    </div>
+    <div class="skill-rows reveal">
+      <div class="skill-row">
+        <div class="skill-cat">Supply Chain &amp; Ops</div>
+        <div class="tags">
+          <span class="tag h">Inventory Management</span>
+          <span class="tag h">Order Replenishment</span>
+          <span class="tag h">Inbound Workflows</span>
+          <span class="tag h">Dock-to-Stock</span>
+          <span class="tag h">Vendor Compliance</span>
+          <span class="tag h">OTIF</span>
+          <span class="tag h">Fill Rate</span>
+          <span class="tag h">Inventory Turns</span>
+          <span class="tag">Demand Planning</span>
+          <span class="tag">Safety Stock</span>
+          <span class="tag">Supplier Scorecards</span>
+          <span class="tag">SIOP</span>
+          <span class="tag">Cycle-Count Analysis</span>
+          <span class="tag">Shrink &amp; Variance Analysis</span>
+          <span class="tag">Freight Spend Analysis</span>
+          <span class="tag">Carrier Performance</span>
+          <span class="tag">Delivery Reliability</span>
+          <span class="tag">Lean / Continuous Improvement</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-cat">Analytics &amp; Reporting</div>
+        <div class="tags">
+          <span class="tag h">Power BI</span>
+          <span class="tag h">DAX</span>
+          <span class="tag h">KPI Dashboards</span>
+          <span class="tag h">Advanced Excel</span>
+          <span class="tag h">Power Query</span>
+          <span class="tag h">VBA</span>
+          <span class="tag h">Pivot Tables</span>
+          <span class="tag h">SQL</span>
+          <span class="tag">Python</span>
+          <span class="tag">Tableau</span>
+          <span class="tag">Data Modeling</span>
+          <span class="tag">Demand Forecasting</span>
+          <span class="tag">Data Extraction</span>
+          <span class="tag">Data Validation</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-cat">ERP &amp; Systems</div>
+        <div class="tags">
+          <span class="tag h">SAP WM/EWM</span>
+          <span class="tag h">SAP SD/MM</span>
+          <span class="tag h">ERP Systems</span>
+          <span class="tag h">WMS</span>
+          <span class="tag">Microsoft 365</span>
+          <span class="tag">SharePoint</span>
+          <span class="tag">Jira</span>
+          <span class="tag">Visio</span>
+          <span class="tag">Power Platform</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-cat">Core Competencies</div>
+        <div class="tags">
+          <span class="tag">Financial Modeling</span>
+          <span class="tag">Cost/Benefit Analysis</span>
+          <span class="tag">Distribution Channel Analysis</span>
+          <span class="tag">Decision Support Tools</span>
+          <span class="tag">Cross-Functional Collaboration</span>
+          <span class="tag">Process Improvement</span>
+          <span class="tag">Data Integrity</span>
+          <span class="tag">Supply Chain Documentation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Work History</div>
+      <div class="sec-h">PROFESSIONAL <span>EXPERIENCE</span></div>
+    </div>
+    <div class="exp-entry reveal">
+      <div>
+        <div class="exp-date">Aug 2022 — Aug 2024</div>
+        <div class="exp-loc">&#128205; Hyderabad, India</div>
+      </div>
+      <div>
+        <div class="exp-co">WIPRO LIMITED</div>
+        <div class="exp-client">Client: Philips</div>
+        <div class="exp-badge">Supply Chain Data Analyst</div>
+        <ul class="exp-ul">
+          <li>Monitored inventory accuracy and movement across 3+ Distribution Centers using ERP and WMS systems, performing cycle-count, shrink, and variance analysis that improved inventory accuracy by 14% and reduced stock discrepancies by 12% over 18 months.</li>
+          <li>Extracted and validated data using SQL and advanced Excel (pivot tables, lookups, formulas, modeling) to maintain data integrity across ERP/WMS/Transportation systems, standardizing KPI reporting as a single source of truth for 5+ stakeholder teams.</li>
+          <li>Built and maintained Power BI dashboards owning KPI reporting on Fill Rate, OTIF, Inventory Accuracy, and Inventory Turns — refreshing weekly datasets that improved OTIF by 8% through proactive data-driven planning decisions.</li>
+          <li>Analyzed freight spend, carrier performance, and delivery reliability across global distribution networks, identifying cost-saving opportunities that reduced logistics costs by 10% and improved on-time delivery across 12 Distribution Centers.</li>
+          <li>Supported Lean/continuous improvement initiatives by identifying process gaps through data-driven analysis, translating insights into actionable improvements that reduced operational inefficiencies by 15% and supported SIOP planning cycles.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="proj-bg">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">What I've Built</div>
+      <div class="sec-h">FEATURED <span>PROJECTS</span></div>
+    </div>
+    <div class="proj-card reveal">
+      <div class="proj-top">
+        <div class="proj-title">SUPPLY CHAIN ANALYTICS<br/>CONTROL TOWER</div>
+        <div class="proj-date">Oct 2025 — Jan 2026</div>
+      </div>
+      <ul class="proj-ul">
+        <li>Built an end-to-end analytics platform using Tableau, Excel (Power Query), and Python to monitor inventory health, order fulfillment performance, and logistics costs across multiple Distribution Centers — improving operational visibility by 30% through standardized KPI reporting and a single source of truth across ERP and WMS data.</li>
+        <li>Developed demand forecasting models and performed safety stock scenario analysis using Python and Excel (VBA), recommending optimal replenishment strategies that reduced projected stockout risk by ~15% and supported proactive inventory replenishment planning across 3+ product lines.</li>
+        <li>Created automated Tableau dashboards and supplier scorecards visualizing Fill Rate, OTIF, Inventory Turns, freight spend, and carrier performance — tracking vendor compliance across 50+ suppliers and enabling management to identify Lean/continuous improvement opportunities.</li>
+      </ul>
+      <div class="proj-chips">
+        <span class="chip">Tableau</span>
+        <span class="chip">Excel VBA</span>
+        <span class="chip">Power Query</span>
+        <span class="chip">Python</span>
+        <span class="chip">KPI Dashboards</span>
+        <span class="chip">Demand Forecasting</span>
+        <span class="chip">Supplier Scorecards</span>
+        <span class="chip">Safety Stock</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Credentials</div>
+      <div class="sec-h">CERTIFI<span>CATIONS</span></div>
+    </div>
+    <div class="certs-grid reveal">
+      <div class="cert">
+        <div class="cert-n">01</div>
+        <div class="cert-icon">&#127885;</div>
+        <div class="cert-name">SAP Certified Specialist — ABAP</div>
+      </div>
+      <div class="cert">
+        <div class="cert-n">02</div>
+        <div class="cert-icon">&#128279;</div>
+        <div class="cert-name">MITx Supply Chain MicroMasters</div>
+      </div>
+      <div class="cert">
+        <div class="cert-n">03</div>
+        <div class="cert-icon">&#128230;</div>
+        <div class="cert-name">APICS Certified in Planning and Inventory Management</div>
+      </div>
+      <div class="cert">
+        <div class="cert-n">04</div>
+        <div class="cert-icon">&#9889;</div>
+        <div class="cert-name">Lean Six Sigma Black Belt</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-bg">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Let's Connect</div>
+      <div class="contact-h">LET'S WORK<br/><span>TOGETHER.</span></div>
+      <div class="contact-cells">
+        <div class="cell"><div class="cell-l">Email</div><div class="cell-v"><a href="mailto:vinaysunkari1904@gmail.com">vinaysunkari1904@gmail.com</a></div></div>
+        <div class="cell"><div class="cell-l">Phone</div><div class="cell-v"><a href="tel:+18138160019">+1 (813) 816-0019</a></div></div>
+        <div class="cell"><div class="cell-l">LinkedIn</div><div class="cell-v"><a href="https://www.linkedin.com/in/vinay-sunkari" target="_blank">linkedin.com/in/vinay-sunkari</a></div></div>
+        <div class="cell"><div class="cell-l">Location</div><div class="cell-v">Tampa, FL — Open to Relocation</div></div>
+      </div>
+      <div class="ctas">
+        <a href="mailto:vinaysunkari1904@gmail.com" class="btn-primary">&#9993; Email Me</a>
+        <button onclick="dlResume()" class="btn-dl-outline">&#8595; Download Resume</button>
+        <a href="https://www.linkedin.com/in/vinay-sunkari" target="_blank" class="btn-secondary">in LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">VINAY<em>.</em></div>
+  <div class="f-copy">&#169; 2026 Vinay Sunkari &middot; Supply Chain &amp; Analytics &middot; Tampa, FL</div>
+</footer>
+
+<script>
+/* ── CURSOR ── */
+var cur=document.getElementById('cur'),ring=document.getElementById('ring');
+var mx=window.innerWidth/2,my=window.innerHeight/2,rx=mx,ry=my;
+var moved=false;
+document.addEventListener('mousemove',function(e){
+  mx=e.clientX;my=e.clientY;
+  if(!moved){moved=true;}
+});
+(function loop(){
+  if(moved){
+    cur.style.left=mx+'px';cur.style.top=my+'px';
+    rx+=(mx-rx)*0.13;ry+=(my-ry)*0.13;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+  }
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,.cert,.proj-card,.skill-row,.info-row,.stat').forEach(function(el){
+  el.addEventListener('mouseenter',function(){
+    cur.style.width='5px';cur.style.height='5px';
+    ring.style.width='48px';ring.style.height='48px';
+    ring.style.borderColor='rgba(240,255,68,.8)';
+    document.body.style.cursor='none';
+  });
+  el.addEventListener('mouseleave',function(){
+    cur.style.width='10px';cur.style.height='10px';
+    ring.style.width='34px';ring.style.height='34px';
+    ring.style.borderColor='rgba(240,255,68,.5)';
+  });
+});
+document.body.addEventListener('mouseover',function(){document.body.style.cursor='none';});
+
+/* ── SCROLL REVEAL ── */
+var revEls=document.querySelectorAll('.reveal');
+var io=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}
+  });
+},{threshold:0.07});
+revEls.forEach(function(r){io.observe(r);});
+
+/* ── RESUME DOWNLOAD ── */
+/* TO LINK YOUR REAL PDF: replace the function body with =>  window.open('YOUR_PDF_URL','_blank'); */
+function dlResume(){
+  var txt='VINAY SUNKARI\nSupply Chain & Analytics Professional\nTampa, FL | +1 (813) 816-0019 | vinaysunkari1904@gmail.com\n\nTo get the full resume PDF, please email vinaysunkari1904@gmail.com\nor connect on LinkedIn: linkedin.com/in/vinay-sunkari\n\n---\nDEV NOTE: Replace dlResume() in the HTML with:\n  window.open("YOUR_RESUME_PDF_URL","_blank");\nto link directly to the hosted PDF.';
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));
+  a.download='Vinay_Sunkari_Contact.txt';a.click();
+}
+</script>
+</body>
+</html>
